@@ -14,7 +14,6 @@ urlpatterns = [
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap',
         {'sitemaps': {'cmspages': CMSSitemap}}),
     url(r'^select2/', include('django_select2.urls')),
-    url(r'^polls/', include('polls.urls', namespace='polls')),
 ]
 
 urlpatterns += i18n_patterns('',
