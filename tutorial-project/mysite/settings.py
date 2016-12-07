@@ -1,4 +1,5 @@
 import os
+
 gettext = lambda s: s
 DATA_DIR = os.path.dirname(os.path.dirname(__file__))
 """
@@ -18,7 +19,6 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -30,7 +30,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 
@@ -39,10 +38,7 @@ ALLOWED_HOSTS = []
 
 ROOT_URLCONF = 'mysite.urls'
 
-
-
 WSGI_APPLICATION = 'mysite.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -63,7 +59,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
@@ -77,34 +72,34 @@ STATICFILES_DIRS = (
 )
 SITE_ID = 1
 
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'mysite', 'templates'),],
+        'DIRS': [os.path.join(BASE_DIR, 'mysite', 'templates'), ],
         'OPTIONS': {
             'context_processors': [
                 'django.contrib.auth.context_processors.auth',
-    'django.contrib.messages.context_processors.messages',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.request',
-    'django.core.context_processors.media',
-    'django.core.context_processors.csrf',
-    'django.core.context_processors.tz',
-    'sekizai.context_processors.sekizai',
-    'django.core.context_processors.static',
-    'cms.context_processors.cms_settings'
+                'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.i18n',
+                'django.core.context_processors.debug',
+                'django.core.context_processors.request',
+                'django.core.context_processors.media',
+                'django.core.context_processors.csrf',
+                'django.core.context_processors.tz',
+                'sekizai.context_processors.sekizai',
+                'django.core.context_processors.static',
+                'cms.context_processors.cms_settings',
+                'aldryn_boilerplates.context_processors.boilerplate',
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-    'django.template.loaders.eggs.Loader'
+                'django.template.loaders.app_directories.Loader',
+                'django.template.loaders.eggs.Loader',
+                'aldryn_boilerplates.template_loaders.AppDirectoriesLoader',
             ],
         },
     },
 ]
-
 
 MIDDLEWARE_CLASSES = (
     'cms.middleware.utils.ApphookReloadMiddleware',
@@ -151,6 +146,21 @@ INSTALLED_APPS = (
     'mysite',
     'polls_cms_integration',
     'polls',
+
+    # you will probably need to add:
+    'aldryn_apphooks_config',
+    'aldryn_boilerplates',
+    'aldryn_categories',
+    'aldryn_common',
+    'aldryn_newsblog',
+    'aldryn_people',
+    'aldryn_reversion',
+    'parler',
+    'sortedm2m',
+    'taggit',
+
+    # and you will probably find the following already listed:
+    'reversion',
 )
 
 LANGUAGES = (
@@ -200,15 +210,23 @@ DATABASES = {
 }
 
 MIGRATION_MODULES = {
-    
+
 }
 
 THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.colorspace',
     'easy_thumbnails.processors.autocrop',
+    # 'easy_thumbnails.processors.scale_and_crop',  # disable this one
     'filer.thumbnail_processors.scale_and_crop_with_subject_location',
     'easy_thumbnails.processors.filters'
 )
 
-
 CMS_TOOLBARS = None
+
+ALDRYN_BOILERPLATE_NAME = 'bootstrap3'
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'aldryn_boilerplates.staticfile_finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
